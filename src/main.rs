@@ -12,20 +12,20 @@ fn main() -> Result<(), Box<std::error::Error>> {
     let lines: HashMap<u32, String> = file_reader
         .lines()
         .map(|line| {
-            let line = line.unwrap();
+            let line = line.expect("Trouble loading line in file.");
             let mut parts = line.split_whitespace();
-            let result: (u32, String) = (
+
+            (
                 parts
                     .next()
-                    .expect("Bad source file. Columns must be (u32, String).")
+                    .expect("Bad source file. Columns must be (u32, String)")
                     .parse::<u32>()
-                    .unwrap(),
+                    .expect("The first column of the source file must be a positive number."),
                 parts
                     .next()
                     .expect("Bad source file. Columns must be (u32, String).")
                     .to_string(),
-            );
-            result
+            )
         })
         .collect();
 
